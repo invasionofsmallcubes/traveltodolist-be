@@ -24,7 +24,6 @@
 /nbdist/
 /.nb-gradle/
 
-.mvn
 mvnw.cmd
 
 src/main/javascript/node_modules
