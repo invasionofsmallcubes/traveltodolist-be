@@ -1,0 +1,11 @@
+{
+  "trips": [
+    {
+      "arrivalAirport": "Pippo",
+      "arrivalDate": "2018-11-11T15:58:34.351Z",
+      "departureAirport": "Ciao",
+      "departureDate": "2018-11-11T15:58:34.351Z",
+      "id": 1
+    }
+  ]
+}

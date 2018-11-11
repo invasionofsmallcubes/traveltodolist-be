@@ -1,9 +1,11 @@
 import * as React from 'react';
 
 import {Component} from "react";
+import {Route} from "react-router";
 import './App.css';
+import CreateTrip from "./CreateTrip";
 import LoadingIndicator from './LoadingIndicator';
-import logo from './logo.svg';
+import SeeTrip from "./SeeTrip";
 
 
 interface State {
@@ -31,19 +33,15 @@ export default class App extends Component<any, State> {
         clearTimeout(this.delayTimer);
     }
 
-
     public render() {
         return (
             <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <h1 className="App-title">Welcome to React</h1>
-                </header>
-                <pre>isLoading: {String(this.state.isLoading)}</pre>
-                <LoadingIndicator isLoading={this.state.isLoading}>
-                    <div>ahoy!</div>
-                </LoadingIndicator>
+                <Route exact={true} path="/" component={CreateTrip} />
+                <Route exact={true} path="/loading" component={LoadingIndicator} />
+                <Route path="/trip/:id" render={this.renderSeeTip} />
             </div>
         );
     }
+
+    private renderSeeTip = (props: any) => <SeeTrip id={props.match.params.id}/>
 }
