@@ -1,4 +1,4 @@
-// import axios from 'axios';
+import axios from 'axios';
 import * as moment from "moment";
 import * as React from "react"
 import {Component} from "react";
@@ -73,12 +73,12 @@ class CreateTrip extends Component<IomponentProps, State> {
     }
 
     private handleSubmit = async (event: any) => {
-        // try {
-        //     const response = await axios.post("/trips", this.state);
-        //     alert(JSON.stringify(response));
-        // } catch (err) {
-        //     alert(JSON.stringify(err));
-        // }
+        try {
+            const response = await axios.post("/trips", this.state);
+            alert(JSON.stringify(response));
+        } catch (err) {
+            alert(JSON.stringify(err));
+        }
 
         // @ts-ignore
         this.props.history.push('/trip/2');

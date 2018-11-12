@@ -152,7 +152,7 @@
                         </goals>
                         <phase>prepare-package</phase>
                         <configuration>
-                            <outputDirectory>${project.build.outputDirectory}/static</outputDirectory>
+                            <outputDirectory>${project.build.outputDirectory}/static/build</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${frontendSrcDir}/build</directory>
