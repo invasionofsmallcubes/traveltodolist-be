@@ -37,11 +37,11 @@ class MongoDBTest {
     fun testCanSaveATrip() {
         val trip = Trip("departure", "arrival", "2017-06-10", "2017-03-12")
 
-        val tripRepository = TripRepository(mongoTemplate)
-        tripRepository.save(trip)
+        val tripRepository = MongoTripRepository(mongoTemplate)
+        val id = tripRepository.save(trip)
 
-        val value = mongoTemplate.findAll(Trip::class.java).first()
-        assertThat(value.arrivalAirport, `is`("arrival"))
+        val value = tripRepository.find(id)
+        assertThat(value?.arrivalAirport, `is`("arrival"))
     }
 }
 
