@@ -1,15 +1,21 @@
 package com.invasionofsmallcubes.traveldodolist
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.*
 
-@RestController("/trip")
+@Controller
+@RequestMapping("/trips")
 class TripController(@Autowired private val tripRepository: TripRepository) {
 
     @PostMapping
-    fun createTrip(trip: Trip): String {
+    @ResponseBody fun createTrip(@RequestBody trip: Trip): String {
         return tripRepository.save(trip)
+    }
+
+    @GetMapping("/{id}")
+    fun getTrip(@PathVariable("id") id: String) : Trip {
+        return tripRepository.find(id)!!
     }
 
 }

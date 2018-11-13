@@ -72,17 +72,14 @@ class CreateTrip extends Component<IomponentProps, State> {
         );
     }
 
-    private handleSubmit = async (event: any) => {
-        try {
-            const response = await axios.post("/trips", this.state);
-            alert(JSON.stringify(response));
-        } catch (err) {
-            alert(JSON.stringify(err));
-        }
-
-        // @ts-ignore
-        this.props.history.push('/trip/2');
-
+    private handleSubmit = (event: any) => {
+            axios.post("/trips", this.state).
+                then( response => {
+                // @ts-ignore
+                this.props.history.push('/trip/' + response.data);
+            }).catch((error) => {
+                alert(JSON.stringify(error));
+            });
         event.preventDefault();
     };
 
