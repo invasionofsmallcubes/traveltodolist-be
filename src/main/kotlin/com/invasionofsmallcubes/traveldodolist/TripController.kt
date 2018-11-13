@@ -19,5 +19,9 @@ class TripController(@Autowired private val tripRepository: TripRepository) {
     }
 
 
+    @GetMapping("/{id}/tasks")
+    @ResponseBody fun getTasks(@PathVariable("id") id: String) : List<Task> {
+        return listOf(Task("1", "baggage"), Task("2", "shampoo"))
+    }
 
 }

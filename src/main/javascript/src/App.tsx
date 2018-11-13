@@ -21,7 +21,6 @@ export default class App extends Component<any, State> {
         this.state = { isLoading : false }
     }
 
-
     public componentDidMount() {
         this.delayTimer = setTimeout(
             () => this.setState({isLoading: false}),
