@@ -14,7 +14,7 @@ import org.junit.Assert.assertThat
 import org.junit.Ignore
 import org.junit.Test
 
-@Ignore
+//@Ignore
 class MongoDBTest {
 
     private lateinit var mongodExecutable: MongodExecutable
@@ -24,7 +24,7 @@ class MongoDBTest {
     fun setUp() {
         val ip = "localhost"
         val port = 27017
-        val mongodConfig = MongodConfigBuilder().version(Version.Main.PRODUCTION)
+        val mongodConfig = MongodConfigBuilder().version(Version.Main.DEVELOPMENT)
                 .net(Net(ip, port, Network.localhostIsIPv6()))
                 .build()
         val starter = MongodStarter.getDefaultInstance()
@@ -36,7 +36,7 @@ class MongoDBTest {
     @Test
     @Throws(Exception::class)
     fun testCanSaveATrip() {
-        val trip = Trip("departure", "arrival", "2017-06-10", "2017-03-12")
+        val trip = Trip(departureAirport = "departure", arrivalAirport = "arrival", departureDate = "2017-06-10", arrivalDate = "2017-03-12")
 
         val tripRepository = MongoTripRepository(mongoTemplate)
         val id = tripRepository.save(trip)

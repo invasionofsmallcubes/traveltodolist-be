@@ -8,6 +8,7 @@ class InMemoryTripRepository : TripRepository {
 
     override fun save(trip: Trip): String {
         val index = counter.incrementAndGet().toString()
+        trip.id = index
         database[index] = trip
         return index
     }

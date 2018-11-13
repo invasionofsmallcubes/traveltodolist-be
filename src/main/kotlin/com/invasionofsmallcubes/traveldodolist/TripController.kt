@@ -14,8 +14,10 @@ class TripController(@Autowired private val tripRepository: TripRepository) {
     }
 
     @GetMapping("/{id}")
-    fun getTrip(@PathVariable("id") id: String) : Trip {
+    @ResponseBody fun getTrip(@PathVariable("id") id: String) : Trip {
         return tripRepository.find(id)!!
     }
+
+
 
 }

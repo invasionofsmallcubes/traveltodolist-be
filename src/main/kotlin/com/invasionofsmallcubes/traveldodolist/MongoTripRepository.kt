@@ -8,7 +8,7 @@ class MongoTripRepository(private val mongoTemplate: MongoTemplate) : TripReposi
     }
 
     override fun save(trip: Trip): String {
-        mongoTemplate.save(trip)
-        return trip.id!!
+        val insertedTrip = mongoTemplate.insert(trip)
+        return insertedTrip.id!!
     }
 }
