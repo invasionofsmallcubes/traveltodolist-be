@@ -12,4 +12,8 @@ class Configuration {
         return InMemoryTripRepository()
     }
 
+    @Bean
+    fun taskRepository() : TaskRepository {
+        return InMemoryTaskRepository()
+    }
 }
