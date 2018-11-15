@@ -89,9 +89,7 @@ class CreateTrip extends Component<IomponentProps, State> {
     };
 
 
-    private handleChangeDeparture = (event: any) => {
-        this.setState({departureAirport: event.target.value});
-    };
+    private handleChangeDeparture = (event: any) => this.setState({departureAirport: event.target.value});
 
     private onChangeArrivalDate = (date: Moment) => this.setState({arrivalDate: date});
     private onChangeDepartureDate = (date: Moment) => this.setState({departureDate: date});

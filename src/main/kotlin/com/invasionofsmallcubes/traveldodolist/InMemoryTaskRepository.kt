@@ -1,8 +1,11 @@
 package com.invasionofsmallcubes.traveldodolist
 
+import java.util.concurrent.atomic.AtomicInteger
+
 class InMemoryTaskRepository : TaskRepository {
 
     private val database = mutableMapOf<String, MutableList<Task>>()
+    private val idCounter = AtomicInteger(4)
 
     override fun buildTasks(tripId: String) {
         database[tripId] = mutableListOf(
@@ -17,4 +20,11 @@ class InMemoryTaskRepository : TaskRepository {
     }
 
     override fun getTasks(tripId: String) = database[tripId]!!
+
+    override fun add(tripId: String, taskDescription: TaskDescription): Task {
+        val tasks = database[tripId]!!
+        val task = Task(idCounter.incrementAndGet().toString(), taskDescription.description)
+        tasks.add(task)
+        return task
+    }
 }

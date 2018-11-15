@@ -32,9 +32,17 @@ class TripController(@Autowired private val tripRepository: TripRepository,
         return taskRepository.getTasks(id)
     }
 
+    @PostMapping("/{id}/tasks/")
+    @ResponseBody fun addTask(@PathVariable("id") id: String, @RequestBody description: TaskDescription) : Task {
+        return taskRepository.add(id, description)
+    }
+
     @DeleteMapping("/{id}/tasks/{taskId}")
     fun deleteTask(@PathVariable("id") id: String, @PathVariable("taskId") taskId: String): ResponseEntity<Void> {
         taskRepository.delete(id, taskId)
         return ResponseEntity(HttpStatus.OK)
     }
+
 }
+
+data class TaskDescription(val description: String)
