@@ -3,6 +3,10 @@ package com.invasionofsmallcubes.traveldodolist
 import org.springframework.data.mongodb.core.MongoTemplate
 
 class MongoTripRepository(private val mongoTemplate: MongoTemplate) : TripRepository {
+    override fun findByOwner(owner: String): List<Trip> {
+        return emptyList()
+    }
+
     override fun find(id: String): Trip? {
         return mongoTemplate.findById(id, Trip::class.java)
     }

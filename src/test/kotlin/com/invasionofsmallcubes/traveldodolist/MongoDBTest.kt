@@ -36,7 +36,7 @@ class MongoDBTest {
     @Test
     @Throws(Exception::class)
     fun testCanSaveATrip() {
-        val trip = Trip(departureAirport = "departure", arrivalAirport = "arrival", departureDate = "2017-06-10", arrivalDate = "2017-03-12")
+        val trip = Trip(departureAirport = "departure", arrivalAirport = "arrival", departureDate = "2017-06-10", arrivalDate = "2017-03-12", owner = "something")
 
         val tripRepository = MongoTripRepository(mongoTemplate)
         val id = tripRepository.save(trip)

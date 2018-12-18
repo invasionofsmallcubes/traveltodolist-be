@@ -5,6 +5,9 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import java.util.*
+import org.springframework.http.HttpHeaders
+
 
 
 @Controller
@@ -14,10 +17,36 @@ class TripController(@Autowired private val tripRepository: TripRepository,
 
     @PostMapping
     @ResponseBody
-    fun createTrip(@RequestBody trip: Trip): String {
-        val id = tripRepository.save(trip)
-        taskRepository.buildTasks(id)
-        return id
+    fun createTrip(@RequestBody trip: Trip, @CookieValue("owner") owner: String?): String {
+        if (owner != null) {
+            trip.owner = owner
+            val id = tripRepository.save(trip)
+            taskRepository.buildTasks(id)
+            return id
+        } else throw RuntimeException()
+    }
+
+    @GetMapping("/")
+    @ResponseBody
+    fun getTrips(@CookieValue("owner") owner: String?): ResponseEntity<List<Trip>> {
+        return if (owner != null) {
+            println("owner found $owner")
+            ResponseEntity.status(HttpStatus.OK).body(tripRepository.findByOwner(owner))
+        } else {
+
+            println("owner not found")
+
+            val newOwner = UUID.randomUUID().toString()
+            val responseHeaders = HttpHeaders()
+            responseHeaders.set("Set-Cookie",
+                    "owner=$newOwner; Expires=Wed, 21 Oct 2025 07:28:00 GMT; HttpOnly; Secure; Domain=traveltodolist-be.herokuapp.com; Path=/")
+
+            ResponseEntity.
+                    ok().
+                    headers(responseHeaders).
+                    body(tripRepository.findByOwner(newOwner))
+
+        }
     }
 
     @GetMapping("/{id}")
