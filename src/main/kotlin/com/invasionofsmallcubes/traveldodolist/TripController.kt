@@ -17,9 +17,10 @@ class TripController(@Autowired private val tripRepository: TripRepository,
 
     @PostMapping
     @ResponseBody
-    fun createTrip(@RequestBody trip: Trip, @CookieValue("owner") owner: String?): String {
+    fun createTrip(@RequestBody tripRequest: TripRequest, @CookieValue("owner") owner: String?): String {
         if (owner != null) {
-            trip.owner = owner
+            val trip = Trip(departureDate = tripRequest.departureDate, arrivalAirport = tripRequest.arrivalAirport
+                    , departureAirport = tripRequest.departureAirport, arrivalDate = tripRequest.arrivalDate, owner = owner)
             val id = tripRepository.save(trip)
             taskRepository.buildTasks(id)
             return id
@@ -39,7 +40,7 @@ class TripController(@Autowired private val tripRepository: TripRepository,
             val newOwner = UUID.randomUUID().toString()
             val responseHeaders = HttpHeaders()
             responseHeaders.set("Set-Cookie",
-                    "owner=$newOwner; Expires=Wed, 21 Oct 2025 07:28:00 GMT; HttpOnly; Secure; Domain=traveltodolist-be.herokuapp.com; Path=/")
+                    "owner=$newOwner; Expires=Wed, 21 Oct 2025 07:28:00 GMT; HttpOnly; Secure; Path=/; Domain=traveltodolist.herokuapp.com;" )
 
             ResponseEntity.
                     ok().
