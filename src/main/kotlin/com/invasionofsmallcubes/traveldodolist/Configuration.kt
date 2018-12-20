@@ -18,7 +18,7 @@ class Configuration {
     }
 
     @Bean
-    fun taskRepository() : TaskRepository {
-        return InMemoryTaskRepository()
+    fun taskRepository(tripRepository: TripRepository) : TaskRepository {
+        return MongoTaskRepository(mongoTemplate, tripRepository)
     }
 }

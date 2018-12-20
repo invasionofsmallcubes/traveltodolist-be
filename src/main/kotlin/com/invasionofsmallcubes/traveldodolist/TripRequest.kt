@@ -4,4 +4,4 @@ import org.springframework.data.annotation.Id
 
 data class TripRequest(@Id var id: String? = null, val departureAirport: String,
                        val arrivalAirport: String, val departureDate: String,
-                       val arrivalDate: String)
+                       val arrivalDate: String, val options: List<String> = emptyList())

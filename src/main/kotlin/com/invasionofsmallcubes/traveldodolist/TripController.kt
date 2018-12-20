@@ -20,7 +20,8 @@ class TripController(@Autowired private val tripRepository: TripRepository,
     fun createTrip(@RequestBody tripRequest: TripRequest, @CookieValue("owner") owner: String?): String {
         if (owner != null) {
             val trip = Trip(departureDate = tripRequest.departureDate, arrivalAirport = tripRequest.arrivalAirport
-                    , departureAirport = tripRequest.departureAirport, arrivalDate = tripRequest.arrivalDate, owner = owner)
+                    , departureAirport = tripRequest.departureAirport, arrivalDate = tripRequest.arrivalDate, owner = owner,
+                    options = tripRequest.options)
             val id = tripRepository.save(trip)
             taskRepository.buildTasks(id)
             return id
@@ -75,4 +76,6 @@ class TripController(@Autowired private val tripRepository: TripRepository,
 
 }
 
-data class TaskDescription(val description: String)
+data class TaskDescription(val description: String) {
+    fun slug() = description.toLowerCase().replace(" ", "-")
+}
