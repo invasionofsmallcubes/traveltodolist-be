@@ -1,8 +1,6 @@
 package com.invasionofsmallcubes.traveldodolist
 
-import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.MongoTemplate
-import org.springframework.data.mongodb.core.mapping.Document
 
 class MongoTaskRepository(private val mongoTemplate: MongoTemplate, private val tripRepository: TripRepository) : TaskRepository {
 
@@ -16,9 +14,6 @@ class MongoTaskRepository(private val mongoTemplate: MongoTemplate, private val 
                     Task("3", "passport"),
                     Task("4", "something")
             ))
-
-    @Document(collection = "tasks")
-    private class TaskDTO(@Id val tripId: String, val listOfTasks: MutableList<Task>)
 
     override fun buildTasks(tripId: String) {
         val trip = tripRepository.find(tripId)
