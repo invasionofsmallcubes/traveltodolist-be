@@ -8,8 +8,6 @@ import org.springframework.http.ResponseEntity
 import java.util.*
 import org.springframework.http.HttpHeaders
 
-
-
 @Controller
 @RequestMapping("/trips")
 class TripController(@Autowired private val tripRepository: TripRepository,
@@ -41,12 +39,9 @@ class TripController(@Autowired private val tripRepository: TripRepository,
             val newOwner = UUID.randomUUID().toString()
             val responseHeaders = HttpHeaders()
             responseHeaders.set("Set-Cookie",
-                    "owner=$newOwner; Expires=Wed, 21 Oct 2025 07:28:00 GMT; HttpOnly; Secure; Path=/; Domain=traveltodolist.herokuapp.com;" )
+                    "owner=$newOwner; Expires=Wed, 21 Oct 2025 07:28:00 GMT; HttpOnly; Secure; Path=/; Domain=traveltodolist.herokuapp.com;")
 
-            ResponseEntity.
-                    ok().
-                    headers(responseHeaders).
-                    body(tripRepository.findByOwner(newOwner))
+            ResponseEntity.ok().headers(responseHeaders).body(tripRepository.findByOwner(newOwner))
 
         }
     }
@@ -64,7 +59,8 @@ class TripController(@Autowired private val tripRepository: TripRepository,
     }
 
     @PostMapping("/{id}/tasks/")
-    @ResponseBody fun addTask(@PathVariable("id") id: String, @RequestBody description: TaskDescription) : Task {
+    @ResponseBody
+    fun addTask(@PathVariable("id") id: String, @RequestBody description: TaskDescription): Task {
         return taskRepository.add(id, description)
     }
 
@@ -74,7 +70,18 @@ class TripController(@Autowired private val tripRepository: TripRepository,
         return ResponseEntity(HttpStatus.OK)
     }
 
+    @PutMapping("/{id}/tasks/{taskId}")
+    fun doneTask(@PathVariable("id") id: String, @PathVariable("taskId") taskId: String, @RequestBody taskEdit: TaskEdit): ResponseEntity<Void> {
+        if (taskEdit.done) {
+            taskRepository.done(id, taskId)
+        } else {
+            taskRepository.undone(id, taskId)
+        }
+        return ResponseEntity(HttpStatus.OK)
+    }
 }
+
+data class TaskEdit(val done: Boolean)
 
 data class TaskDescription(val description: String) {
     fun slug() = description.toLowerCase().replace(" ", "-")
