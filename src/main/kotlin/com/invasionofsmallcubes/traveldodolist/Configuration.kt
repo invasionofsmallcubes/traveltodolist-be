@@ -18,7 +18,13 @@ class Configuration {
     }
 
     @Bean
-    fun taskRepository(tripRepository: TripRepository) : TaskRepository {
-        return MongoTaskRepository(mongoTemplate, tripRepository)
+    fun predefinedTaskRepository(): PredefinedTaskRepository {
+        return MongoPredefinedTaskRepository(mongoTemplate)
     }
+
+    @Bean
+    fun taskRepository(tripRepository: TripRepository, predefinedTaskRepository: PredefinedTaskRepository): TaskRepository {
+        return MongoTaskRepository(mongoTemplate, tripRepository, predefinedTaskRepository)
+    }
+
 }
