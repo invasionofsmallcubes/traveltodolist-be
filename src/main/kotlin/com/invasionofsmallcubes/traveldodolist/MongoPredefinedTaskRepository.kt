@@ -5,8 +5,8 @@ import org.springframework.data.mongodb.core.MongoTemplate
 class MongoPredefinedTaskRepository(private val mongoTemplate: MongoTemplate) : PredefinedTaskRepository {
 
     override fun findById(id: String): List<Task> {
-        val taskDTO = mongoTemplate.findById(id, PredefinedTaskDTO::class.java)!!
-        return taskDTO.tasks
+        val predefinedTaskDTO = mongoTemplate.findById(id, PredefinedTaskDTO::class.java)!!
+        return predefinedTaskDTO.listOfTasks
     }
 
     override fun all(): List<PredefinedTaskDTO> {

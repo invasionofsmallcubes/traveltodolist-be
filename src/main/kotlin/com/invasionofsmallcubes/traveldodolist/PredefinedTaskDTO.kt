@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 
 @Document(collection = "predefinedtasks")
-data class PredefinedTaskDTO(@Id val id: String, val description: String, val tasks: MutableList<Task>)
+data class PredefinedTaskDTO(@Id val id: String, val description: String, val listOfTasks: MutableList<Task>)
 
 //    private val predefinedTasks = mapOf(
 //            "fun" to listOf(Task("kayak", "Kayak desc", false),
