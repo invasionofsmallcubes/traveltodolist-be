@@ -17,7 +17,7 @@ class MongoTaskRepository(private val mongoTemplate: MongoTemplate, private val 
 
     override fun delete(tripId: String, taskId: String) {
         val tasks = mongoTemplate.findById(tripId, TaskDTO::class.java)!!
-        tasks.listOfTasks.removeIf { task -> task.taskId == taskId }
+        tasks.listOfTasks.removeIf { task -> task.id == taskId }
         mongoTemplate.save(tasks)
     }
 
@@ -31,14 +31,14 @@ class MongoTaskRepository(private val mongoTemplate: MongoTemplate, private val 
 
     override fun done(tripId: String, taskId: String) {
         val tasks = mongoTemplate.findById(tripId, TaskDTO::class.java)!!
-        val task = tasks.listOfTasks.first { task -> task.taskId == taskId }
+        val task = tasks.listOfTasks.first { task -> task.id == taskId }
         task.done = true
         mongoTemplate.save(tasks)
     }
 
     override fun undone(tripId: String, taskId: String) {
         val tasks = mongoTemplate.findById(tripId, TaskDTO::class.java)!!
-        val task = tasks.listOfTasks.first { task -> task.taskId == taskId }
+        val task = tasks.listOfTasks.first { task -> task.id == taskId }
         task.done = false
         mongoTemplate.save(tasks)
     }
