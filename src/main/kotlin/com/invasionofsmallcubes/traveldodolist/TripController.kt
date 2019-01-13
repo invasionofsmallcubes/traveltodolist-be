@@ -40,7 +40,9 @@ class TripController(@Autowired private val tripRepository: TripRepository,
             val newOwner = UUID.randomUUID().toString()
             val responseHeaders = HttpHeaders()
             responseHeaders.set("Set-Cookie",
-                    "owner=$newOwner; Expires=Wed, 21 Oct 2025 07:28:00 GMT; HttpOnly; Secure; Path=/; Domain=traveltodolist.herokuapp.com;")
+                   // "owner=$newOwner; Expires=Wed, 21 Oct 2025 07:28:00 GMT; HttpOnly; Secure; Path=/; Domain=traveltodolist.herokuapp.com;")
+                    "owner=$newOwner; Expires=Wed, 21 Oct 2025 07:28:00 GMT; Path=/; Domain=traveltodolist.dk;")
+
 
             ResponseEntity.ok().headers(responseHeaders).body(tripRepository.findByOwner(newOwner))
 
