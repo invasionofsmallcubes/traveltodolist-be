@@ -1,6 +1,8 @@
 package com.invasionofsmallcubes.traveldodolist
 
 import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.data.mongodb.core.query.Criteria
+import org.springframework.data.mongodb.core.query.Query
 
 class MongoPredefinedTaskRepository(private val mongoTemplate: MongoTemplate) : PredefinedTaskRepository {
 
@@ -10,6 +12,8 @@ class MongoPredefinedTaskRepository(private val mongoTemplate: MongoTemplate) : 
     }
 
     override fun all(): List<PredefinedTaskDTO> {
-        return mongoTemplate.findAll(PredefinedTaskDTO::class.java)
+        val query = Query()
+        query.addCriteria(Criteria.where("id").ne("default"))
+        return mongoTemplate.find(query, PredefinedTaskDTO::class.java)
     }
 }
