@@ -11,7 +11,8 @@ import org.springframework.http.HttpHeaders
 @Controller
 @RequestMapping("/trips")
 class TripController(@Autowired private val tripRepository: TripRepository,
-                     @Autowired private val taskRepository: TaskRepository) {
+                     @Autowired private val taskRepository: TaskRepository,
+                     @Autowired private val predefinedTaskRepository: PredefinedTaskRepository) {
 
     @PostMapping
     @ResponseBody
@@ -78,6 +79,12 @@ class TripController(@Autowired private val tripRepository: TripRepository,
             taskRepository.undone(id, taskId)
         }
         return ResponseEntity(HttpStatus.OK)
+    }
+
+    @GetMapping("/types")
+    @ResponseBody
+    fun all(): List<PredefinedTaskDTO> {
+        return predefinedTaskRepository.all()
     }
 }
 
